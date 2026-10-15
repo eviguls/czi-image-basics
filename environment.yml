@@ -1,0 +1,15 @@
+name: czi-basics
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - nomkl          # use OpenBLAS instead of Intel MKL (avoids DLL clashes on Windows)
+  - numpy
+  - pillow
+  - matplotlib-base
+  - jupyterlab
+  - ipykernel
+  - pip
+  - pip:
+      - bioio        # reads microscopy formats into NumPy
+      - bioio-czi    # the .czi (Zeiss) reader plugin for bioio
