@@ -9,6 +9,7 @@ dependencies:
   - matplotlib-base
   - jupyterlab
   - ipykernel
+  - pytest
   - pip
   - pip:
       - bioio        # reads microscopy formats into NumPy
