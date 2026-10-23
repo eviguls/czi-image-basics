@@ -8,12 +8,17 @@ DNA damage repair foci in nuclei (immunofluorescence, DAPI + foci marker).
 
 ## What is in the repo
 
-| File | What it is |
-|---|---|
-| `czi_basics.py` | The custom module: `load_czi`, `to_8bit`, `save_image` |
-| `czi_basics_demo.ipynb` | Notebook that runs every function on the sample and checks the results with `assert`s |
-| `environment.yml` | Conda environment with the required packages |
-| `data/sample_nuclei_foci.czi` | Test image (0.6 MB): 2 channels (DAPI, GFP foci), 512 x 512 px |
+```
+czi-image-basics/
+├── czi_basics/              <- the package (the folder you import)
+│   ├── __init__.py          <- marks the folder as a package; exposes the 3 functions
+│   └── image_io.py          <- the code: load_czi, to_8bit, save_image
+├── setup.py                 <- install script: name, version, dependencies
+├── tests/test_czi_basics.py <- quick automatic checks (run with pytest)
+├── czi_basics_demo.ipynb    <- notebook demo with asserts on the sample image
+├── environment.yml          <- conda environment
+└── data/sample_nuclei_foci.czi  <- test image (0.6 MB, DAPI + GFP, 512 x 512 px)
+```
 
 ## The functions
 
@@ -32,13 +37,32 @@ for name, channel in zip(meta["channel_names"], data):
     save_image(to_8bit(channel), f"outputs/{name}.png")
 ```
 
-## How to run it
+## How to install it
 
 ```bash
 git clone https://github.com/eviguls/czi-image-basics.git
 cd czi-image-basics
 conda env create -f environment.yml
 conda activate czi-basics
+pip install .
+```
+
+`pip install .` reads `setup.py`, installs the dependencies (numpy, pillow,
+bioio, bioio-czi) and copies the `czi_basics` package into the environment, so
+`import czi_basics` now works from any folder. After you change the code, run
+`pip install .` again (or install once with `pip install -e .`, "editable" mode,
+so code changes are picked up without reinstalling).
+
+Check that it worked:
+
+```bash
+python -c "import czi_basics; print(czi_basics.__version__)"   # prints 0.1.0
+pytest                                                          # 3 passed
+```
+
+## How to run the demo
+
+```bash
 jupyter lab czi_basics_demo.ipynb
 ```
 

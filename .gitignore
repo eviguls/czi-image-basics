@@ -2,3 +2,6 @@ outputs/
 executed_demo.ipynb
 __pycache__/
 .ipynb_checkpoints/
+build/
+*.egg-info/
+.pytest_cache/
